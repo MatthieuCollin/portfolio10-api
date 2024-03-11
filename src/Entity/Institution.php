@@ -2,13 +2,24 @@
 
 namespace App\Entity;
 
-use App\Repository\InstitutionRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Task;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\InstitutionRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: InstitutionRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection()
+    ]
+)]
 class Institution
 {
     #[ORM\Id]
@@ -31,7 +42,7 @@ class Institution
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $link = null;
 
-    #[ORM\ManyToMany(targetEntity: task::class, inversedBy: 'institutions')]
+    #[ORM\ManyToMany(targetEntity: Task::class, inversedBy: 'institutions')]
     private Collection $task;
 
     public function __construct()

@@ -2,10 +2,19 @@
 
 namespace App\Entity;
 
-use App\Repository\SkillRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\SkillRepository;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 
 #[ORM\Entity(repositoryClass: SkillRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection()
+    ]
+)]
 class Skill
 {
     #[ORM\Id]
