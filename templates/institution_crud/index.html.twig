@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Institution index{% endblock %}
+
+{% block body %}
+    <h1>Institution index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>BeginDate</th>
+                <th>EndDate</th>
+                <th>Type</th>
+                <th>Link</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for institution in institutions %}
+            <tr>
+                <td>{{ institution.id }}</td>
+                <td>{{ institution.name }}</td>
+                <td>{{ institution.beginDate ? institution.beginDate|date('Y-m-d') : '' }}</td>
+                <td>{{ institution.endDate ? institution.endDate|date('Y-m-d') : '' }}</td>
+                <td>{{ institution.type }}</td>
+                <td>{{ institution.link }}</td>
+                <td>
+                    <a href="{{ path('app_institution_crud_show', {'id': institution.id}) }}">show</a>
+                    <a href="{{ path('app_institution_crud_edit', {'id': institution.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_institution_crud_new') }}">Create new</a>
+{% endblock %}
