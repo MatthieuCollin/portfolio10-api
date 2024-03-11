@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\WorkRepository;
 use ApiPlatform\Metadata\ApiResource;
@@ -31,8 +32,10 @@ class Work
     #[ORM\Column(length: 255)]
     private ?string $websiteLink = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $imageLink = null;
+   
+
+    #[ORM\Column(type: Types::BLOB)]
+    private $image = null;
 
     public function getId(): ?int
     {
@@ -75,14 +78,15 @@ class Work
         return $this;
     }
 
-    public function getImageLink(): ?string
+
+    public function getImage()
     {
-        return $this->imageLink;
+        return $this->image;
     }
 
-    public function setImageLink(string $imageLink): static
+    public function setImage($image): static
     {
-        $this->imageLink = $imageLink;
+        $this->image = $image;
 
         return $this;
     }
