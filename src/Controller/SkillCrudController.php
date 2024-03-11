@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/skill/crud')]
+#[Route('/admin/skill/crud')]
 class SkillCrudController extends AbstractController
 {
     #[Route('/', name: 'app_skill_crud_index', methods: ['GET'])]

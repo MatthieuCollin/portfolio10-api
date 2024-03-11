@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/profil/crud')]
+#[Route('/admin/profil/crud')]
 class ProfilCrudController extends AbstractController
 {
     #[Route('/', name: 'app_profil_crud_index', methods: ['GET'])]

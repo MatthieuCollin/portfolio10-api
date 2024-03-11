@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/task/crud')]
+#[Route('/admin/task/crud')]
 class TaskCrudController extends AbstractController
 {
     #[Route('/', name: 'app_task_crud_index', methods: ['GET'])]
