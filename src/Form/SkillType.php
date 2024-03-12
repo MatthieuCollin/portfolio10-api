@@ -15,7 +15,7 @@ class SkillType extends AbstractType
         $builder
             ->add('name')
             ->add('image', FileType::class, [
-                'label' => 'File',
+                'label' => 'Image (SVG)',
                 'required' => true,
             ]);
         ;

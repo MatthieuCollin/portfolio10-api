@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class InstitutionType extends AbstractType
 {
@@ -24,6 +25,13 @@ class InstitutionType extends AbstractType
             ])
             ->add('type')
             ->add('link')
+            ->add('type', ChoiceType::class, [
+                'label' => 'Veuillez choisir un type',
+                'choices' => [
+                    'École' => 'school',
+                    'Travail' => 'work',
+                ],
+            ])
             ->add('task', EntityType::class, [
                 'class' => task::class,
                 'choice_label' => 'id',

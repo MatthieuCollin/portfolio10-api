@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomepageController!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>CRUD Homepage</h1>
+
+    <ul class="crud-menu">
+        <li><a class="crud-link" href="{{ path('app_work_crud_index') }}">Modifier le portfolio</a></li>
+        <li><a class="crud-link" href="{{ path('app_profil_crud_index') }}">Modifier le profil</a></li>
+        <li><a class="crud-link" href="{{ path('app_skill_crud_index') }}">Modifier les skills</a></li>
+        <li><a class="crud-link" href="{{ path('app_institution_crud_index') }}">Modifier les établissements</a></li>
+        <li><a class="crud-link" href="{{ path('app_task_crud_index') }}">Modifier les tâches</a></li>
+
+        {# Add links for other CRUD operations as needed #}
+    </ul>
+</div>
+{% endblock %}

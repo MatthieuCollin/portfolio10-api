@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Skill;
 use App\Form\SkillType;
+use App\Form\SkillTypeEdit;
 use App\Repository\SkillRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,6 +31,9 @@ class SkillCrudController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $skill->setImage(file_get_contents($data->getImage()));
+
             $entityManager->persist($skill);
             $entityManager->flush();
 
@@ -53,7 +57,7 @@ class SkillCrudController extends AbstractController
     #[Route('/{id}/edit', name: 'app_skill_crud_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Skill $skill, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(SkillType::class, $skill);
+        $form = $this->createForm(SkillTypeEdit::class, $skill);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

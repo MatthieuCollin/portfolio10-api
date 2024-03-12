@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Institution;
 use App\Form\InstitutionType;
+use App\Form\InstitutionTypeEdit;
 use App\Repository\InstitutionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,6 +31,11 @@ class InstitutionCrudController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $data = $form->getData();
+            $institution->setImage(file_get_contents($data->getImage()));
+
+
             $entityManager->persist($institution);
             $entityManager->flush();
 
@@ -53,7 +59,7 @@ class InstitutionCrudController extends AbstractController
     #[Route('/{id}/edit', name: 'app_institution_crud_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Institution $institution, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(InstitutionType::class, $institution);
+        $form = $this->createForm(InstitutionTypeEdit::class, $institution);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
