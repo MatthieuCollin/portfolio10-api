@@ -80,6 +80,11 @@
   button {
    cursor: pointer;
   }
+
+  td img{
+    width: 100px;
+    height: auto;
+  }
   
   .content{
     padding: 1vh;
