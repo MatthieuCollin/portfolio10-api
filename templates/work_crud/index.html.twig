@@ -23,7 +23,8 @@
                 <td>{{ work.name }}</td>
                 <td>{{ work.githubLink }}</td>
                 <td>{{ work.websiteLink }}</td>
-                <td>{{ work.image }}</td>
+                <td>                <td><img src="data:image/png;base64,{{ work.image }}"/></td>
+            </td>
                 <td>
                     <a href="{{ path('app_work_crud_show', {'id': work.id}) }}">show</a>
                     <a href="{{ path('app_work_crud_edit', {'id': work.id}) }}">edit</a>

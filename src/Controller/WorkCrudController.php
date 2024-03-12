@@ -3,13 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Work;
+use App\Form\WorkType;
 use App\Form\Work1Type;
 use App\Repository\WorkRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin/work/crud')]
 class WorkCrudController extends AbstractController
@@ -30,8 +31,12 @@ class WorkCrudController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $work->setImage(file_get_contents($data->getImage()));
+
             $entityManager->persist($work);
             $entityManager->flush();
+
 
             return $this->redirectToRoute('app_work_crud_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -53,7 +58,7 @@ class WorkCrudController extends AbstractController
     #[Route('/{id}/edit', name: 'app_work_crud_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Work $work, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(Work1Type::class, $work);
+        $form = $this->createForm(WorkType::class, $work);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
