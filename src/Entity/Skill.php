@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\SkillRepository;
 use ApiPlatform\Metadata\ApiResource;
@@ -25,6 +26,9 @@ class Skill
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private $image = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -38,6 +42,34 @@ class Skill
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getImage()
+    {
+        // Check if $this->image is a resource (stream)
+        if (is_resource($this->image)) {
+            // Rewind the stream to the beginning (if needed)
+            rewind($this->image);
+
+            // Get the contents of the stream and base64 encode it
+            $base64Data = base64_encode(stream_get_contents($this->image));
+
+            // Close the stream
+            fclose($this->image);
+
+            return $base64Data;
+        }
+
+        // If $this->image is not a resource, assume it's already base64 encoded
+        return $this->image;
+    }
+
+
+    public function setImage($image): static
+    {
+        $this->image = $image;
 
         return $this;
     }

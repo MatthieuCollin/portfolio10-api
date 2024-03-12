@@ -6,6 +6,7 @@ use App\Entity\Skill;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class SkillType extends AbstractType
 {
@@ -13,6 +14,10 @@ class SkillType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('image', FileType::class, [
+                'label' => 'File',
+                'required' => true,
+            ]);
         ;
     }
 

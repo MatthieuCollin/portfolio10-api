@@ -45,6 +45,9 @@ class Institution
     #[ORM\ManyToMany(targetEntity: Task::class, inversedBy: 'institutions')]
     private Collection $task;
 
+    #[ORM\Column(type: Types::BLOB)]
+    private $image = null;
+
     public function __construct()
     {
         $this->task = new ArrayCollection();
@@ -135,6 +138,34 @@ class Institution
     public function removeTask(task $task): static
     {
         $this->task->removeElement($task);
+
+        return $this;
+    }
+
+    public function getImage()
+    {
+        // Check if $this->image is a resource (stream)
+        if (is_resource($this->image)) {
+            // Rewind the stream to the beginning (if needed)
+            rewind($this->image);
+
+            // Get the contents of the stream and base64 encode it
+            $base64Data = base64_encode(stream_get_contents($this->image));
+
+            // Close the stream
+            fclose($this->image);
+
+            return $base64Data;
+        }
+
+        // If $this->image is not a resource, assume it's already base64 encoded
+        return $this->image;
+    }
+
+
+    public function setImage($image): static
+    {
+        $this->image = $image;
 
         return $this;
     }

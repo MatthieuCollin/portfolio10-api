@@ -29,10 +29,7 @@ class InstitutionType extends AbstractType
                 'choice_label' => 'id',
                 'multiple' => true,
             ])
-            ->add('image', FileType::class, [
-                'label' => 'File',
-                'required' => true,
-            ]);
+          
         ;
     }
 
