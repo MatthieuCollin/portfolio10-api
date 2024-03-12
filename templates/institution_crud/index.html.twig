@@ -26,7 +26,7 @@
                 <td>{{ institution.endDate ? institution.endDate|date('Y-m-d') : '' }}</td>
                 <td>{{ institution.type }}</td>
                 <td>{{ institution.link }}</td>
-                <td><img style="width: 500px" src="data:image/png;base64,{{ work.image }}"/>
+                <td><img style="width: 500px" src="data:image/png;base64,{{ institution.image }}"/>
                 <td>
                     <a href="{{ path('app_institution_crud_show', {'id': institution.id}) }}">show</a>
                     <a href="{{ path('app_institution_crud_edit', {'id': institution.id}) }}">edit</a>

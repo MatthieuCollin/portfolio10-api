@@ -36,6 +36,7 @@ class InstitutionType extends AbstractType
                 'class' => task::class,
                 'choice_label' => 'id',
                 'multiple' => true,
+                "required"=> false
             ])
             ->add('image', FileType::class, [
                 'label' => 'File',
