@@ -29,11 +29,13 @@ class InstitutionTypeEdit extends AbstractType
                     'École' => 'school',
                     'Travail' => 'work',
                 ],
-            ])            ->add('link')
+            ])            
+            ->add('link')
             ->add('task', EntityType::class, [
                 'class' => task::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
                 'multiple' => true,
+                "required" => false 
             ])
           
         ;

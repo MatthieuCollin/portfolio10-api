@@ -15,11 +15,7 @@ class TaskType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('institutions', EntityType::class, [
-                'class' => Institution::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
+            
         ;
     }
 

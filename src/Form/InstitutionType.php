@@ -34,7 +34,7 @@ class InstitutionType extends AbstractType
             ])
             ->add('task', EntityType::class, [
                 'class' => task::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
                 'multiple' => true,
                 "required"=> false
             ])

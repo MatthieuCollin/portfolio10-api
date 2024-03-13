@@ -30,6 +30,12 @@ class TaskCrudController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            foreach($data->getInstitutions() as $institution){
+                $task->addInstitution($institution);
+            }
+
             $entityManager->persist($task);
             $entityManager->flush();
 

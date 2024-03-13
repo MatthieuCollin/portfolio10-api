@@ -2,23 +2,27 @@
 
 namespace App\Entity;
 
+use ORM\JoinColumn;
 use App\Entity\Task;
 use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\GetCollection;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\InstitutionRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: InstitutionRepository::class)]
 #[ApiResource(
     operations: [
         new Get(),
         new GetCollection()
-    ]
+    ],
+    normalizationContext: ['groups' => ['read']],
+    denormalizationContext: ['groups' => ['write']],
 )]
 class Institution
 {
@@ -28,24 +32,31 @@ class Institution
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('read')]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups('read')]
     private ?\DateTimeInterface $beginDate = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Groups('read')]
     private ?\DateTimeInterface $endDate = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('read')]
     private ?string $type = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups('read')]
     private ?string $link = null;
 
     #[ORM\ManyToMany(targetEntity: Task::class, inversedBy: 'institutions')]
+    #[Groups('read')]
     private Collection $task;
 
     #[ORM\Column(type: Types::BLOB)]
+    #[Groups('read')]
     private $image = null;
 
     public function __construct()
