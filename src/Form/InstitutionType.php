@@ -19,9 +19,12 @@ class InstitutionType extends AbstractType
             ->add('name')
             ->add('beginDate', null, [
                 'widget' => 'single_text',
+                
             ])
             ->add('endDate', null, [
                 'widget' => 'single_text',
+                'required' => false,
+
             ])
             ->add('type')
             ->add('link')

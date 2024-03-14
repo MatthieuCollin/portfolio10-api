@@ -22,6 +22,8 @@ class InstitutionTypeEdit extends AbstractType
             ])
             ->add('endDate', null, [
                 'widget' => 'single_text',
+                'required' => false,
+
             ])
             ->add('type', ChoiceType::class, [
                 'label' => 'Veuillez choisir un type',
