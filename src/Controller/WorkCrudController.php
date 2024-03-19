@@ -6,10 +6,12 @@ use App\Entity\Work;
 use App\Form\Work1Type;
 use App\Repository\WorkRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 #[Route('/admin/work/crud')]
 class WorkCrudController extends AbstractController
@@ -30,8 +32,25 @@ class WorkCrudController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $work->setImage(file_get_contents($data->getImage()));
+            $data = $form->get('image_url')->getData();
+
+            
+            if ($data) {
+                
+                $newName = $form->get('name')->getData();
+                
+                // Move the file to the directory where brochures are stored
+                try {
+                   
+                    $filesystem = new Filesystem();
+                    $filesystem->copy(
+                        $data->getPathname(),
+                        "/var/www/portfolio30/static/media" . str_replace(' ', '_', strtolower($newName)) . ".png"
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+            }
 
             $entityManager->persist($work);
             $entityManager->flush();
