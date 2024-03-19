@@ -16,6 +16,11 @@ class WorkType extends AbstractType
             ->add('name')
             ->add('githubLink')
             ->add('websiteLink')
+            ->add('image_url', FileType::class, [
+                'label' => 'File',
+                'required' => false,
+
+            ]);
         ;
     }
 
