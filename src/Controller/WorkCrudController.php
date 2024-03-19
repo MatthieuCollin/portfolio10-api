@@ -45,7 +45,7 @@ class WorkCrudController extends AbstractController
                     $filesystem = new Filesystem();
                     $filesystem->copy(
                         $data->getPathname(),
-                        "/var/www/portfolio30/static/media" . str_replace(' ', '_', strtolower($newName)) . ".png"
+                        "/var/www/portfolio30/static/media/" . str_replace(' ', '_', strtolower($newName)) . ".png"
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
