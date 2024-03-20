@@ -1,6 +1,6 @@
 nelmio_cors:
   defaults:
-    allow_origin: ["https://devwebcollin.fr'"]
+    allow_origin: ["https://devwebcollin.fr"]
     allow_methods: ["GET", "POST", "DELETE"]
     allow_headers: ["Content-Type", "Authorization"]
     expose_headers: ["Link"]
