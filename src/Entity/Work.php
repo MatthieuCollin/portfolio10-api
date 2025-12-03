@@ -32,8 +32,8 @@ class Work
     #[ORM\Column(length: 255)]
     private ?string $websiteLink = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $imageUrl = null;
+    #[ORM\Column(type: Types::BLOB)]
+    private  $image = null;
 
     public function getId(): ?int
     {
@@ -76,14 +76,30 @@ class Work
         return $this;
     }
 
-    public function getImageUrl(): ?string
+    public function getImage()
     {
-        return $this->imageUrl;
+        // Check if $this->image is a resource (stream)
+        if (is_resource($this->image)) {
+            // Rewind the stream to the beginning (if needed)
+            rewind($this->image);
+
+            // Get the contents of the stream and base64 encode it
+            $base64Data = base64_encode(stream_get_contents($this->image));
+
+            // Close the stream
+            fclose($this->image);
+
+            return $base64Data;
+        }
+
+        // If $this->image is not a resource, assume it's already base64 encoded
+        return $this->image;
     }
 
-    public function setImageUrl(string $imageUrl): static
+
+    public function setImage($image): static
     {
-        $this->imageUrl = $imageUrl;
+        $this->image = $image;
 
         return $this;
     }

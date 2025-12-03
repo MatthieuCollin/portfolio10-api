@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Work;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
@@ -16,7 +17,10 @@ class WorkType extends AbstractType
             ->add('name')
             ->add('githubLink')
             ->add('websiteLink')
-            ->add('image_url');
+            ->add('image', FileType::class, [
+                'label' => 'File',
+                'required' => true,
+            ]);
         ;
     }
 
