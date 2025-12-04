@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+
+  web: 
+    volumes:
+    # Monter seulement ce qui est nécessaire
+    - ./src:/var/www/html/src:cached
+    - ./config:/var/www/html/config:cached
+    - ./templates:/var/www/html/templates:cached
+    - ./public:/var/www/html/public:cached
+  
+    - portfolio-content:/var/www/html/public/content
+    build: .
+    ports: [ "8000:80" ]
+
+
+  db:
+    image: mysql:latest
+    container_name: portfolio10-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: portfolio
+    ports:
+      - 3306:3306
+    volumes:
+      - portfolio-mysql-data:/var/lib/mysql
+volumes:
+  portfolio-content:
+  portfolio-mysql-data:
