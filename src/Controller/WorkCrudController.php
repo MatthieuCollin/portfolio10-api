@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Work;
 use App\Form\Work1Type;
+use App\Service\ImageService;
 use App\Repository\WorkRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -25,7 +26,7 @@ class WorkCrudController extends AbstractController
     }
 
     #[Route('/new', name: 'app_work_crud_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, ImageService $imgService): Response
     {
         $work = new Work();
         $form = $this->createForm(Work1Type::class, $work);
@@ -33,28 +34,14 @@ class WorkCrudController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->get('image_url')->getData();
-
-            
             if ($data) {
-                
-                $newName = $form->get('name')->getData();
-                
-                // Move the file to the directory where brochures are stored
-                try {
-                   
-                    $filesystem = new Filesystem();
-                    $filesystem->copy(
-                        $data->getPathname(),
-                        "/var/www/portfolio30/static/media/" . str_replace(' ', '_', strtolower($newName)) . ".png"
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
+                $newName = $imgService->generateUniqueImageName($form->get('name')->getData());
+                $imgService->moveImageToDirectory($newName, $data);
+                $work->setImageUrl($newName);
             }
 
             $entityManager->persist($work);
             $entityManager->flush();
-
 
             return $this->redirectToRoute('app_work_crud_index', [], Response::HTTP_SEE_OTHER);
         }

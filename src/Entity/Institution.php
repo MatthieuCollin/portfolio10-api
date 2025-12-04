@@ -55,9 +55,9 @@ class Institution
     #[Groups('read')]
     private Collection $task;
 
-    #[ORM\Column(type: Types::BLOB)]
+    #[ORM\Column(length: 255)]
     #[Groups('read')]
-    private $image = null;
+    private ?string $imageUrl = null;
 
     public function __construct()
     {
@@ -153,30 +153,14 @@ class Institution
         return $this;
     }
 
-    public function getImage()
+    public function getImageUrl(): ?string
     {
-        // Check if $this->image is a resource (stream)
-        if (is_resource($this->image)) {
-            // Rewind the stream to the beginning (if needed)
-            rewind($this->image);
-
-            // Get the contents of the stream and base64 encode it
-            $base64Data = base64_encode(stream_get_contents($this->image));
-
-            // Close the stream
-            fclose($this->image);
-
-            return $base64Data;
-        }
-
-        // If $this->image is not a resource, assume it's already base64 encoded
-        return $this->image;
+        return $this->imageUrl;
     }
 
-
-    public function setImage($image): static
+    public function setImageUrl(string $imageUrl): static
     {
-        $this->image = $image;
+        $this->imageUrl = $imageUrl;
 
         return $this;
     }

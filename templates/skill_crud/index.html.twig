@@ -18,7 +18,7 @@
             <tr>
                 <td>{{ skill.id }}</td>
                 <td>{{ skill.name }}</td>
-                <td><img style="width: 500px" src="data:image/svg+xml;base64,{{ skill.image }}"/>
+                <td><img style="width: 500px" src="{{ asset('content/' ~ skill.imageUrl) }}" alt="{{ skill.name }}"/>
                 <td>
                     <a href="{{ path('app_skill_crud_show', {'id': skill.id}) }}">show</a>
                     <a href="{{ path('app_skill_crud_edit', {'id': skill.id}) }}">edit</a>
