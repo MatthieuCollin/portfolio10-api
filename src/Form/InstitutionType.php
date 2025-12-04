@@ -41,7 +41,7 @@ class InstitutionType extends AbstractType
                 'multiple' => true,
                 "required"=> false
             ])
-            ->add('image', FileType::class, [
+            ->add('image_url', FileType::class, [
                 'label' => 'File',
                 'required' => true,
             ]);

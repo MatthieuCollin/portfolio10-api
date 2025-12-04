@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Skill;
 use App\Form\SkillType;
 use App\Form\SkillTypeEdit;
+use App\Service\ImageService;
 use App\Repository\SkillRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,15 +25,19 @@ class SkillCrudController extends AbstractController
     }
 
     #[Route('/new', name: 'app_skill_crud_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,  ImageService $imgService): Response
     {
         $skill = new Skill();
         $form = $this->createForm(SkillType::class, $skill);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $skill->setImage(file_get_contents($data->getImage()));
+             $data = $form->get('image_url')->getData();
+            if ($data) {
+                $newName = $imgService->generateUniqueImageName($form->get('name')->getData());
+                $imgService->moveImageToDirectory($newName, $data);
+                $skill->setImageUrl($newName);
+            }
 
             $entityManager->persist($skill);
             $entityManager->flush();

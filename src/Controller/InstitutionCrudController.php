@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Institution;
 use App\Form\InstitutionType;
 use App\Form\InstitutionTypeEdit;
+use App\Service\ImageService;
 use App\Repository\InstitutionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,7 +25,7 @@ class InstitutionCrudController extends AbstractController
     }
 
     #[Route('/new', name: 'app_institution_crud_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,  ImageService $imgService): Response
     {
         $institution = new Institution();
         $form = $this->createForm(InstitutionType::class, $institution);
@@ -32,8 +33,12 @@ class InstitutionCrudController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $data = $form->getData();
-            $institution->setImage(file_get_contents($data->getImage()));
+            $data = $form->get('image_url')->getData();
+            if ($data) {
+                $newName = $imgService->generateUniqueImageName($form->get('name')->getData());
+                $imgService->moveImageToDirectory($newName, $data);
+                $institution->setImageUrl($newName);
+            }
 
 
             $entityManager->persist($institution);
