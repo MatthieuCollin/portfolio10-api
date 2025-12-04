@@ -37,7 +37,8 @@ class WorkCrudController extends AbstractController
             
             if ($data) {
                 
-                $newName = $form->get('name')->getData();
+                $newName = str_replace(' ', '_', strtolower( $form->get('name')->getData())) . ".png";
+                $work->setImageUrl($newName);
                 
                 // Move the file to the directory where brochures are stored
                 try {
@@ -45,8 +46,9 @@ class WorkCrudController extends AbstractController
                     $filesystem = new Filesystem();
                     $filesystem->copy(
                         $data->getPathname(),
-                        "/var/www/portfolio30/static/media/" . str_replace(' ', '_', strtolower($newName)) . ".png"
+                        "/var/www/html/public/content/" . $newName
                     );
+
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
