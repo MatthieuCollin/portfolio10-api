@@ -26,7 +26,7 @@ class ProfilCrudController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $profil = new Profil();
-        $form = $this->createForm(Profil1Type::class, $profil);
+        $form = $this->createForm(ProfilType::class, $profil);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -53,7 +53,7 @@ class ProfilCrudController extends AbstractController
     #[Route('/{id}/edit', name: 'app_profil_crud_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Profil $profil, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(Profil1Type::class, $profil);
+        $form = $this->createForm(ProfilType::class, $profil);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

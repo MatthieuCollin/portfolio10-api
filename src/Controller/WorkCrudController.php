@@ -29,7 +29,7 @@ class WorkCrudController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, ImageService $imgService): Response
     {
         $work = new Work();
-        $form = $this->createForm(Work1Type::class, $work);
+        $form = $this->createForm(WorkType::class, $work);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -63,7 +63,7 @@ class WorkCrudController extends AbstractController
     #[Route('/{id}/edit', name: 'app_work_crud_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Work $work, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(Work1Type::class, $work);
+        $form = $this->createForm(WorkType::class, $work);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
