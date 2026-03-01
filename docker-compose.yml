@@ -13,6 +13,8 @@ services:
     - portfolio-content:/var/www/html/public/content
     build: .
     ports: [ "8000:80" ]
+    networks:
+      - portfolio-network
 
 
   db:
@@ -26,6 +28,13 @@ services:
       - 3306:3306
     volumes:
       - portfolio-mysql-data:/var/lib/mysql
+    networks:
+      - portfolio-network
+
 volumes:
   portfolio-content:
   portfolio-mysql-data:
+networks:
+  portfolio-network:
+    name: portfolio-network
+    driver: bridge
